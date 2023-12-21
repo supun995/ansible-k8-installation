@@ -9,3 +9,16 @@
     regexp: '^([^#].*?\sswap\s+sw\s+.*)$'
     replace: '# \1'
  
+- name: Disable SElinux
+  shell:
+    setenforce 0
+  ignore_errors: true
+
+- name: update SElinux configfile
+  lineinfile:
+    path: /etc/selinux/config
+    regexp: '^SELINUX='
+    line: 'SELINUX=disabled'
+
+- name: Enable IP forwarding
+  
