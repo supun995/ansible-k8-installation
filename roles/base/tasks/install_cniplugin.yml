@@ -1,0 +1,26 @@
+---
+- name: Download cni-plugin
+  get_url:
+    url: https://github.com/containernetworking/plugins/releases/download/v1.3.0/cni-plugins-linux-amd64-v1.3.0.tgz
+    dest: /root/cni-plugins-linux-amd64-v1.3.0.tgz
+  tags:
+    - cniplugin-install
+
+- name: make directory for cni-plugin
+  file:
+    path: /opt/{{ item }}
+    state: directory
+  ignore_errors: true
+  loop:
+    - cni
+    - cni/bin
+  tags:
+    - cniplugin-install
+
+- name: extract cni-plugin
+  unarchive:
+    src: /root/cni-plugins-linux-amd64-v1.3.0.tgz
+    dest: /opt/cni/bin
+    remote_src: true
+  tags:
+    - cniplugin-install
