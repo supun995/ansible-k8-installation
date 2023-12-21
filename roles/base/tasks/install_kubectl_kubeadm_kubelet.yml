@@ -1,0 +1,21 @@
+---
+- name: configure kubernetes repository
+  copy:
+    src: kubernetes.repo
+    dest: /etc/yum.repos.d/kubernetes.repo
+
+- name: install kube packages
+  yum:
+    name: {{ item }}
+    state: present
+  loop:
+    - kubelet-1.25.0-0
+    - kubectl-1.25.0-0
+    - kubeadm-1.25.0-0
+  notify: "restart kubelet"
+
+- name: enable kube services
+  service:
+    name: kubelet
+    enabled: yes
+  

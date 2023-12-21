@@ -4,3 +4,9 @@
     name: containerd
     state: restarted
   listen: "restart containerd"
+
+- name: restart kubelet service
+  service:
+    name: kubelet
+    state: restarted
+  listen: "restart kubelet"
