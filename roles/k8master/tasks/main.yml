@@ -5,3 +5,4 @@
       permenent: yes
       state: enabled
   loop: "{{ controlplan_ports }}"
+  notify: "reload firewall"

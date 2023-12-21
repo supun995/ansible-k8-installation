@@ -1,0 +1,5 @@
+---
+- name: reload firewall
+  firewalld:
+    state: reloaded
+  listen: "reload firewall"
