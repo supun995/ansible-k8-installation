@@ -2,6 +2,8 @@
 
 - include: open_worker_firewallports.yml
 
+- include: initialize_worker.yml
+
 
 
 
