@@ -20,11 +20,11 @@
     regexp: '^SELINUX='
     line: 'SELINUX=disabled'
 
-- include.task: install_containerd.yml
+- include: install_containerd.yml
 
-- include.task: install_runc.yml
+- include: install_runc.yml
 
-- include.task: install_cniplugin.yml
+- include: install_cniplugin.yml
 
 
 # - name: set bridge-nf-call-iptables

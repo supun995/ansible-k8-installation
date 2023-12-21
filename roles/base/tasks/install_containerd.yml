@@ -1,9 +1,16 @@
 ---
+- name: create containerd tmp directory
+  file:
+    path: /root/containerd
+    state: directory
+  tags:
+    - containerd-install
+
 - name: Downloadingcontainerd archive
   get_url:
     url: https://github.com/containerd/containerd/releases/download/v1.7.2/containerd-1.7.2-linux-amd64.tar.gz
     dest: /root/containerd/containerd.tar.gz
-    mode: 644
+    mode: 655
   tags:
     - containerd-install
     - containerd-download
@@ -21,6 +28,9 @@
   copy:
     src: /root/containerd/bin/{{ binary }}
     dest: /usr/local/bin/{{ binary }}
+    owner: root
+    group: root
+    mode: '0655'
     remote_src: true
   loop: "{{ containerd_binaries }}"
   loop_control:
@@ -62,18 +72,6 @@
     - containerd-install
     - containerd-config
 
-# - name: create containerd configfile
-#   copy:
-#     content: "{{ containerd_config }}"
-#     dest: /etc/containerd/config.toml
-#     owner: root
-#     group: root
-#     mode: 0644
-#   tags:
-#     - containerd-install
-#     - containerd-config
-#   notify: "restart containerd"
-
 - name: create containerd configfile
   shell:
     /usr/local/bin/containerd config default > /etc/containerd/config.toml
@@ -86,8 +84,15 @@
     line: '            SystemdCgroup = true'
   ignore_errors: true
   notify: "restart containerd"
-    
 
-    
-    
-
+# - name: create containerd configfile
+#   copy:
+#     content: "{{ containerd_config }}"
+#     dest: /etc/containerd/config.toml
+#     owner: root
+#     group: root
+#     mode: 0644
+#   tags:
+#     - containerd-install
+#     - containerd-config
+#   notify: "restart containerd"
