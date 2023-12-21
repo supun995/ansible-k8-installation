@@ -20,5 +20,39 @@
     regexp: '^SELINUX='
     line: 'SELINUX=disabled'
 
-- name: Enable IP forwarding
+- include.task: install_containerd.yml
+
+- include.task: install_runc.yml
+
+- include.task: install_cniplugin.yml
+
+
+# - name: set bridge-nf-call-iptables
+#   sysctl:
+#     name: net.bridge.bridge-nf-call-iptables
+#     value: 1
+
+# - name: set ip_forward
+#   sysctl:
+#     name: net.ipv4.ip_forward
+#     value: 1
+
+- name: set ip_forward
+  shell:
+    echo 1 > /proc/sys/net/ipv4/ip_forward
+
+- name: Add net.bridge.bridge-nf-call-iptables to /etc/sysctl.conf
+  lineinfile:
+    path: /etc/sysctl.conf
+    line: 'net.bridge.bridge-nf-call-iptables = 1'
+
+- name: load br_netfilter kernel module
+  modprobe:
+    name: br_netfilter
+    state: present
+
+- name: reload kernal config
+  shell:
+    sysctl -p
+
   
