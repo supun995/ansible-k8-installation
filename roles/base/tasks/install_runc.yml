@@ -1,0 +1,16 @@
+---
+- name: Download runc binary
+  get_url: 
+    url: https://github.com/opencontainers/runc/releases/download/v1.1.7/runc.amd64
+    dest: /root/runc.amd64
+  tags:
+    - runc-install
+
+- name: Install runc
+  shell:
+    install -m 755 /root/runc.amd64 /usr/local/sbin/runc
+  tags:
+    - runc-install
+
+
+
