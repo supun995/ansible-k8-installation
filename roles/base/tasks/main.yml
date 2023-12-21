@@ -13,6 +13,8 @@
 
 - include: setup_iptables.yml
 
+- include: install_kubectl_kubeadm_kubelet.yml
+
 
 
   

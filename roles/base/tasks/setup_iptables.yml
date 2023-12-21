@@ -9,13 +9,13 @@
     line: 'net.bridge.bridge-nf-call-iptables = 1'
 
 - name: load br_netfilter kernel module
-  modprobe:
+  community.general.modprobe:
     name: br_netfilter
     state: present
 
 - name: reload kernal config
   shell:
-    sysctl -p
+    sysctl --system
 
 # - name: set bridge-nf-call-iptables
 #   sysctl:

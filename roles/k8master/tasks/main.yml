@@ -1,8 +1,5 @@
 ---
-- name: Open Firewall Ports
-  firewalld:
-    - port: "{{ item }}/tcp"
-      permenent: yes
-      state: enabled
-  loop: "{{ controlplan_ports }}"
-  notify: "reload firewall"
+
+- include: open_firewallports.yml
+
+- include: initialize_cluster.yml

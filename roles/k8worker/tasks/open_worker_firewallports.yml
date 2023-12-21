@@ -1,0 +1,8 @@
+---
+- name: Open Firewall Ports
+  firewalld:
+    - port: "{{ item }}/tcp"
+      permenent: yes
+      state: enabled
+  loop: "{{ workernode_ports }}"
+  notify: "reload firewall"

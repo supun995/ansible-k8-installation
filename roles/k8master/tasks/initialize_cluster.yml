@@ -1,0 +1,35 @@
+---
+- name: copy kubeadm configuration file
+  copy: 
+    src: kubeadm-config.yaml
+    dest: /etc/kubernetes/kubeadm-config.yaml
+
+- name: Initialize the cluster
+  shell: kubeadm init --config /etc/kubernetes/kubeadm-config.yaml >> cluster_initialized.log
+  args:
+    chdir: /root
+    creates: cluster_initialized.log
+
+- name: create .kube directory
+  file:
+    path: /root/.kube
+    state: directory
+    mode: 0755
+
+- name: copy admin.conf to user's kube config
+  copy: 
+    src: /etc/kubernetes/admin.conf
+    dest: /root/.kube/config
+    remote_src: true
+
+- name: copy calico installation manifest
+  copy: 
+    src: calico.yaml
+    dest: /root/calico.yaml
+
+- name: install Pod network
+  shell: kubectl apply -f /root/calico.yaml >> pod_network_install.log
+  args:
+    chdir: /root
+    creates: pod_network_install.log 
+  
