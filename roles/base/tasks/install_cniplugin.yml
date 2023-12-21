@@ -24,3 +24,4 @@
     remote_src: true
   tags:
     - cniplugin-install
+  notify: "restart containerd"
