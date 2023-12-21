@@ -1,0 +1,8 @@
+---
+containerd_binaries:
+  - containerd-shim-runc-v2
+  - containerd-shim
+  - ctr
+  - containerd-shim-runc-v1
+  - containerd
+  - containerd-stress
