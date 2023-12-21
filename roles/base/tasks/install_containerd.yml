@@ -3,7 +3,7 @@
   get_url:
     url: https://github.com/containerd/containerd/releases/download/v1.7.2/containerd-1.7.2-linux-amd64.tar.gz
     dest: /root/containerd/containerd.tar.gz
-    mode: 600
+    mode: 644
   tags:
     - containerd-install
     - containerd-download
